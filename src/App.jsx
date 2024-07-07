@@ -1,50 +1,55 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemons } from "./slices/pokemonSlice.js";
-import { Container } from "react-bootstrap";
-import CardPokemon from "./components/CardPokemon.jsx";
-import Button from 'react-bootstrap/Button';
+import { Card, Col, Container, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const datosPokemon = useSelector((state) => state.pokemon.datosPokemon)
   const status = useSelector((state) => state.pokemon.status)
+  const error = useSelector((state) => state.pokemon.error)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getPokemons())
   }
-  , [])
+  , [])  
 
-  let id = new Date().getTime()
+  // const handleNewPokemon = () => {
+    
+  // }
 
-  const handleNewPokemon = () => {
-    pass
+  let content
+
+  if(status === 'Cargando'){
+    content = <p>Cargando...</p>
+  } else if(status === 'Exitoso'){
+    content = (
+      <Row sm={1} md={4} lg={6}>
+        {datosPokemon.map((pokemon) => (
+          <Col key={pokemon.id}>
+            <Card className="h-100">
+              <Card.Header as="h5">{pokemon.name}</Card.Header>
+              <Card.Body>
+                <Card.Img variant="top" src={pokemon.sprites.other.dream_world.front_default} />
+                <Card.Text>
+                  {pokemon.description}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    )
+  } else if(status === 'Rechazado'){
+    content = <p>Error al cargar los pokemon: {error}</p>
   }
 
   return (
     <Container className="flex justify-center">
       <h1>Pokemon</h1>
-      {
-        status == 'Exitoso' ? (
-          <>
-            <Container >
-            {
-              datosPokemon.map((pokemon, index) => {
-                <>
-                  <CardPokemon key={index} name={pokemon.name} img={pokemon.url}></CardPokemon>
-                </>
-              })
-            }
-          </Container> 
-          <Button variant="primary" onClick={handleNewPokemon}>Primary</Button>{'More'}
-          </>
-        ) : 
-        (
-          <p>Cargando...</p>
-        )
-      }
+      {content}
     
 
     </Container>

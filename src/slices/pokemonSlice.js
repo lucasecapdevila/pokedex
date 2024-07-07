@@ -5,11 +5,11 @@ const initialState = {
   datosPokemon: [],
   status: 'vacio',
   error: null,
-  pokemon: {}
 }
 
 export const getPokemons = createAsyncThunk('pokemons/getPokemons', async () => {
-  const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=10')
+  const response = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20')
+  console.log(response.data.next);
   
   const arrayPokemon = response.data.results.map(async (pokemon) => {
     const responsePokemon = await axios.get(pokemon.url)    
@@ -29,7 +29,6 @@ const pokemonSlice = createSlice({
       state.status = 'Cargando';
     })
     .addCase(getPokemons.fulfilled, (state, action) => {
-      console.log(action.payload)
       state.status = 'Exitoso'
       state.datosPokemon = action.payload
     })
