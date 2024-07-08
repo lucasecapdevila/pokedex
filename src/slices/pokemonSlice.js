@@ -5,7 +5,7 @@ const initialState = {
   datosPokemon: [],
   status: 'vacio',
   error: null,
-  nextPokemons: []
+  nextPokemons: "",
 }
 
 export const getPokemons = createAsyncThunk('pokemons/getPokemons', async () => {
@@ -14,20 +14,28 @@ export const getPokemons = createAsyncThunk('pokemons/getPokemons', async () => 
     const responsePokemon = await axios.get(pokemon.url)    
     return responsePokemon.data
   })
-  
-  return await Promise.all(arrayPokemon)
+
+  return {
+    datosPokemon: await Promise.all(arrayPokemon),
+    nextPokemons: response.data.next
+  }
 })
 
-export const getNextPokemons = createAsyncThunk('pokemons/getNextPokemons', async () => {
-  const response = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=10&limit=19')
+export const getNextPokemons = createAsyncThunk('pokemons/getNextPokemons', async (nextUrl = "") => {
+  const response = await axios.get(nextUrl)
 
-  const responseNext = await axios.get(response.data.next)
-  const nextPokemons = responseNext.data.results.map(async (pokemon) => {
+  // const responseNext = await axios.get(response.data.next)
+  const nextPokemons = response.data.results.map(async (pokemon) => {
     const responseNextPokemons = await axios.get(pokemon.url)    
     return responseNextPokemons.data
   })
+
+  const nextPokemon = await Promise.all(nextPokemons)
   
-  return await Promise.all(nextPokemons)
+  return {
+    datosPokemon: nextPokemon,
+    nextPokemons: response.data.next
+  }
 })
 
 const pokemonSlice = createSlice({
@@ -40,7 +48,8 @@ const pokemonSlice = createSlice({
     })
     .addCase(getPokemons.fulfilled, (state, action) => {
       state.status = 'Exitoso'
-      state.datosPokemon = action.payload
+      state.datosPokemon = action.payload.datosPokemon
+      state.nextPokemons = action.payload.nextPokemons
     })
     .addCase(getPokemons.rejected, (state, action) => {
       state.status = 'Rechazado';
@@ -48,7 +57,8 @@ const pokemonSlice = createSlice({
     })
     .addCase(getNextPokemons.fulfilled, (state, action) => {
       state.status = 'Exitoso';
-      state.datosPokemon = [...state.datosPokemon, ...action.payload]
+      state.datosPokemon = [...state.datosPokemon, ...action.payload.datosPokemon]
+      state.nextPokemons = action.payload.nextPokemons
       // state.nextPokemons = action.payload
     });
 	},

@@ -17,13 +17,8 @@ function App() {
   }
   , [])  
 
-  // useEffect(() => {
-  //   dispatch(getPokemons())
-  // }, [datosPokemon])
-
   const handleNewPokemon = () => {
-    dispatch(getNextPokemons())
-    console.log(nextPokemons);
+    dispatch(getNextPokemons(nextPokemons))
   }
 
   let content
