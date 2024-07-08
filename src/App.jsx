@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemons } from "./slices/pokemonSlice.js";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { getNextPokemons, getPokemons } from "./slices/pokemonSlice.js";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const datosPokemon = useSelector((state) => state.pokemon.datosPokemon)
   const status = useSelector((state) => state.pokemon.status)
   const error = useSelector((state) => state.pokemon.error)
+  const nextPokemons = useSelector((state) => state.pokemon.nextPokemons)
 
   const dispatch = useDispatch()
 
@@ -16,9 +17,10 @@ function App() {
   }
   , [])  
 
-  // const handleNewPokemon = () => {
-    
-  // }
+  const handleNewPokemon = () => {
+    dispatch(getNextPokemons())
+    console.log(nextPokemons);
+  }
 
   let content
 
@@ -50,7 +52,7 @@ function App() {
     <Container className="flex justify-center">
       <h1>Pokemon</h1>
       {content}
-    
+      <Button onClick={handleNewPokemon}>Ver más</Button>
 
     </Container>
   );
