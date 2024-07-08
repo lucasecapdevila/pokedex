@@ -48,7 +48,8 @@ const pokemonSlice = createSlice({
     })
     .addCase(getNextPokemons.fulfilled, (state, action) => {
       state.status = 'Exitoso';
-      state.nextPokemons = action.payload
+      state.datosPokemon = [...state.datosPokemon, ...action.payload]
+      // state.nextPokemons = action.payload
     });
 	},
 });
