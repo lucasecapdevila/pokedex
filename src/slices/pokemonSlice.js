@@ -76,9 +76,10 @@ export const getNextPokemons = createAsyncThunk(
 
 export const getPokemon = createAsyncThunk(
   "pokemons/getPokemon",
-  async (id = 1) => {
+  async (name = '') => {
     /* Mediante recibir el parámetro de la ID, podemos fetchear a la API específica; el ID lo sacamos por medio del MAP. */
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    //! Cambié el link de donde recibe a UN pokemon individual
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
 
     /* Devolvemos los datos específicos para poder hace el fetch */
     return response.data;
@@ -135,6 +136,10 @@ const pokemonSlice = createSlice({
       })
       .addCase(getPokemon.pending, (state) => {
         state.status = "Cargando";
+      })
+      .addCase(getPokemon.rejected, (state, action) => {
+        state.status = "Rechazado";
+        state.error = action.error.message;
       })
       .addCase(getPokemon.fulfilled, (state, action) => {
         state.status = "Exitoso";

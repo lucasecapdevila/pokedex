@@ -1,17 +1,22 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-function CardPokemon({ key, name, img }) {
+import { primerLetraMayuscula } from '../helpers/funciones';
+import { Link } from 'react-router-dom';
+function CardPokemon({ pokemon }) {
+  const tipoPokemon = (id) => {
+
+  }
+
   return (
-    <Card key={key}>
-      <Card.Img variant="top" src={img ? img : '/'} />
-      <Card.Body>
-        <Card.Title>{ name ? name : 'Nombre por defecto'}</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+    <Card className="h-100">
+      <Card.Header className='fw-bold text-center'>N°{pokemon.order}: {primerLetraMayuscula(pokemon.name)}</Card.Header>
+      <Card.Body className='d-flex flex-column'>
+        <Card.Img variant="top" className='h-100' src={pokemon.sprites.other.dream_world.front_default} />
+        <Card.Text className='flex-grow-1'>
+          <br />
+          Tipo: {pokemon.types.map(tipo => primerLetraMayuscula(tipo.type.name)).join(' ')}
         </Card.Text>
-        <Button variant="primary">+ info</Button>
+        <Link className='btn btn-success mt-auto' to={`/detalle/${pokemon.name}`}>Más info</Link>
       </Card.Body>
     </Card>
   )
