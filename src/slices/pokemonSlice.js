@@ -6,6 +6,7 @@ const initialState = {
   status: "vacio",
   error: null,
   nextPokemons: "",
+  searchStatus: "",
   specificPokemon: {},
 };
 
@@ -106,6 +107,9 @@ const pokemonSlice = createSlice({
       console.log("Action: ", action.payload)
       state.specificPokemon = action.payload;
     },
+    changeSearchStatus: (state, action) => {
+      state.searchStatus = "";
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -151,13 +155,20 @@ const pokemonSlice = createSlice({
         state.specificPokemon = action.payload;
       })
       .addCase(searchPokemon.fulfilled, (state, action) => {
-        state.status = "Exitoso";
+        state.searchStatus = "Exitoso";
         console.log("Specific Pokemon: ", action.payload)
         state.specificPokemon = action.payload;
+      })
+      .addCase(searchPokemon.rejected, (state, action) => {
+        state.searchStatus = "Rechazado";
+        state.error = action.error.message;
+      })
+      .addCase(searchPokemon.pending, (state) => {
+        state.searchStatus = "Cargando";
       });
   },
 });
 
-export const { setPokemon } = pokemonSlice.actions;
+export const { setPokemon, changeSearchStatus } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

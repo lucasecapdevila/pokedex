@@ -1,13 +1,16 @@
-import { useState } from "react"
-import { Button, Col, Container, Form, InputGroup, Navbar, Row } from "react-bootstrap"
-import { useDispatch } from "react-redux"
-import { searchPokemon } from "../slices/pokemonSlice"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Button, Col, Container, Form, Navbar, Row } from "react-bootstrap"
+import { useDispatch, useSelector } from "react-redux"
+import { changeSearchStatus, searchPokemon } from "../slices/pokemonSlice"
+import { Link, useNavigate } from "react-router-dom"
+import { primerLetraMayuscula } from "../helpers/funciones"
+import Swal from "sweetalert2"
 
 const Menu = () => {
   const [searchPoke, setSearchPoke] = useState('')
-
-  const dispatch = useDispatch
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.pokemon)
 
   const handleSearchPokemon = (e) => {
     e.preventDefault()
@@ -18,6 +21,29 @@ const Menu = () => {
     */
     dispatch(searchPokemon(searchPoke))
   }
+
+  useEffect(() => {
+    if(state.searchStatus !== "") {
+        if(state.searchStatus === "Exitoso") {
+          dispatch(changeSearchStatus(''))
+          navigate(`/detalle/${primerLetraMayuscula(searchPoke)}`)
+          setSearchPoke('')
+        } else if (state.searchStatus === "Rechazado") {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "No existe ese pokemon!",
+          });
+          setSearchPoke('')
+        } else {
+          console.log("Cargando...")
+          /* 
+            Estaría interesante poner un loading, pero ni idea
+            como se hace, habría que preguntar a alejo 
+          */
+        }
+    }
+  }, [state.searchStatus])
 
   return (
     <Navbar bg="dark" data-bs-theme="dark">
