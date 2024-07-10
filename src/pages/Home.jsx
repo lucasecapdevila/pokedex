@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap'
 const Home = () => {
   return (
     <Container>
-      <h1 className='text-center my-4'>Pokedex - Equipo Paleta</h1>
+      <h1 className='text-center my-4'>Pokedex - Crew Paleta</h1>
       <PokemonList/>
       
     </Container>

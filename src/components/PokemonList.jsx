@@ -30,9 +30,9 @@ const PokemonList = () => {
     content = <h2 className="text-center">Cargando...</h2>
   } else if(status === 'Exitoso'){
     content = (
-      <Row sm={1} md={3} lg={4} xl={6}>
+      <Row sm={1} md={3} lg={4} xl={5}>
         {datosPokemon.map((pokemon) => (
-          <Col key={pokemon.id}>
+          <Col key={pokemon.id} className="mb-2">
             <CardPokemon pokemon={pokemon}></CardPokemon>
           </Col>
         ))}

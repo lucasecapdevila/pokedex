@@ -1,0 +1,3 @@
+.hoverCard:hover {
+    transform: rotateY(20deg)
+}

@@ -101,7 +101,12 @@ export const searchPokemon = createAsyncThunk(
 const pokemonSlice = createSlice({
   name: "pokemon",
   initialState,
-  reducers: {},
+  reducers: {
+    setPokemon: (state, action) => {
+      console.log("Action: ", action.payload)
+      state.specificPokemon = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getPokemons.pending, (state) => {
@@ -152,5 +157,7 @@ const pokemonSlice = createSlice({
       });
   },
 });
+
+export const { setPokemon } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;
