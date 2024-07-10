@@ -6,8 +6,12 @@ import { primerLetraMayuscula } from "../helpers/funciones";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPokemon } from "../slices/pokemonSlice";
+import { useTranslation } from "react-i18next";
+
 
 function CardPokemon({ pokemon }) {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -21,21 +25,21 @@ function CardPokemon({ pokemon }) {
   }
 
   return (
-    <Card className="h-100">
+    <Card className="h-100 hoverCard">
       <Card.Header className="fw-bold text-center">
         N°{pokemon.id}: {primerLetraMayuscula(pokemon.name)}
       </Card.Header>
       <Card.Body className="d-flex flex-column">
         <Card.Img
           variant="top"
-          className="h-100 hoverCard"
+          className="h-100"
           src={pokemon.sprites.other.dream_world.front_default}
         />
         <Card.Text className="flex-grow-1">
           <br />
           Tipo:{" "}
           {pokemon.types
-            .map((tipo) => primerLetraMayuscula(tipo.type.name))
+            .map((tipo) => t(tipo.type.name))
             .join(" ")}
             <br/>
         </Card.Text>

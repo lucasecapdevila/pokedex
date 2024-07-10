@@ -59,17 +59,17 @@ const PokemonPage = () => {
             <Col className="d-flex flex-column align-items-center justify-content-center">
                 <LuSword/>
                 <div>Ataque</div>
-                <div className="font-medium">{infoPokemon?.stats[1]?.base_stat}</div>
+                {/* <div className="font-medium">{infoPokemon?.stats[1]?.base_stat}</div> */}
             </Col>
             <Col className="d-flex flex-column align-items-center justify-content-center">
                 <FaShieldAlt />
                 <div>Defensa</div>
-                <div className="font-medium">{infoPokemon?.stats[2]?.base_stat}</div>
+                {/* <div className="font-medium">{infoPokemon?.stats[2]?.base_stat}</div> */}
             </Col>
             <Col className="d-flex flex-column align-items-center justify-content-center">
                 <SiSpeedtest />
                 <div>Velocidad</div>
-                <div className="font-medium">{infoPokemon?.stats[5]?.base_stat}</div>
+                {/* <div className="font-medium">{infoPokemon?.stats[5]?.base_stat}</div> */}
             </Col>
           </Row>
         </Container>
@@ -77,7 +77,7 @@ const PokemonPage = () => {
 
       <div className="flex-1 p-6">
         <div className="prose max-w-2xl">
-          {console.log(infoPokemon.species.url)}
+          {/* {console.log(infoPokemon.species.url)} */}
           <h1>{name}</h1>
           <p>
             {
