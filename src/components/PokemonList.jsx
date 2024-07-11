@@ -4,12 +4,14 @@ import { Button, Col, Row } from "react-bootstrap";
 import CardPokemon from "./CardPokemon";
 import { useEffect } from "react";
 import Filter from "./Filter";
+import Loader from "../common/Loader";
 
 const PokemonList = () => {
   const datosPokemon = useSelector((state) => state.pokemon.datosPokemon);
   const status = useSelector((state) => state.pokemon.status);
   const error = useSelector((state) => state.pokemon.error);
   const nextPokemons = useSelector((state) => state.pokemon.nextPokemons);
+  const loading = useSelector((state) => state.spinner);
 
   const dispatch = useDispatch();
 
@@ -27,16 +29,24 @@ const PokemonList = () => {
   let content;
 
   if (status === "Cargando") {
-    content = <h2 className="text-center">Cargando...</h2>;
+    content = <h2 className="text-center"><Loader/></h2>;
   } else if (status === "Exitoso") {
     content = (
-      <Row sm={1} md={3} lg={4} xl={5}>
-        {datosPokemon.map((pokemon) => (
-          <Col key={pokemon.id} className="mb-2">
-            <CardPokemon pokemon={pokemon}></CardPokemon>
-          </Col>
-        ))}
-      </Row>
+      <>
+      {loading ? <Loader/> : 
+      <>
+      <h2 className="text-center">Pokemons</h2>
+        <Row sm={1} md={3} lg={4} xl={5}>
+          {datosPokemon.map((pokemon) => (
+            <Col key={pokemon.id} className="mb-2">
+              <CardPokemon pokemon={pokemon}></CardPokemon>
+            </Col>
+          ))}
+        </Row>
+        <Button onClick={handleNewPokemon}>Ver más</Button>
+        </>
+      }
+      </>
     );
   } else if (status === "Rechazado") {
     content = <p>Error al cargar los pokemon: {error}</p>;
@@ -47,8 +57,7 @@ const PokemonList = () => {
       {/* <Filter /> */}
       {/* <br /> */}
       {content}
-      {console.log(datosPokemon)}
-      <Button onClick={handleNewPokemon}>Ver más</Button>
+      
     </>
   );
 };
