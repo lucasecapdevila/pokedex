@@ -35,7 +35,6 @@ const PokemonList = () => {
       <>
       {loading ? <Loader/> : 
       <>
-      <h2 className="text-center">Pokemons</h2>
         <Row sm={1} md={3} lg={4} xl={5}>
           {datosPokemon.map((pokemon) => (
             <Col key={pokemon.id} className="mb-2">
@@ -43,7 +42,7 @@ const PokemonList = () => {
             </Col>
           ))}
         </Row>
-        <Button onClick={handleNewPokemon}>Ver más</Button>
+        <Button className="mx-auto my-2 fw-light robotoFont" onClick={handleNewPokemon}>Cargar más Pokemon</Button>
         </>
       }
       </>
@@ -58,7 +57,7 @@ const PokemonList = () => {
       {/* <br /> */}
       <div className="d-flex flex-column">
         {content}
-        <Button className="mx-auto my-2 fw-light robotoFont" onClick={handleNewPokemon}>Cargar más Pokemon</Button>
+        
       </div>
     </>
   );

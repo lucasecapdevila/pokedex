@@ -7,7 +7,7 @@ const Loader = () => {
   return (
     <div className="sweet-loading d-flex justify-content-center my-2">
       <FadeLoader
-        color="#485c70"
+        color="#ced5db"
         height={20}
         width={5}
         loading={loading}
