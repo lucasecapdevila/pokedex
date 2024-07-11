@@ -8,6 +8,7 @@ const initialState = {
   nextPokemons: "",
   searchStatus: "",
   specificPokemon: {},
+  types: [],
 };
 
 export const getPokemons = createAsyncThunk(
@@ -74,6 +75,16 @@ export const getNextPokemons = createAsyncThunk(
     /* cuando devolvemos, lo mandamos con el mismo formato; con los nextPokemons y con los siguientes pokemons*/
   }
 );
+
+export const getTypes = createAsyncThunk(
+  "pokemons/getTypes",
+  async () => {
+    const response = await axios.get("https://pokeapi.co/api/v2/type?limit=21");
+    return response.data.results
+  }
+)
+
+
 
 export const getPokemon = createAsyncThunk(
   "pokemons/getPokemon",
@@ -165,6 +176,9 @@ const pokemonSlice = createSlice({
       })
       .addCase(searchPokemon.pending, (state) => {
         state.searchStatus = "Cargando";
+      })
+      .addCase(getTypes.fulfilled, (state, action) => {
+        state.types = action.payload;
       });
   },
 });

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getNextPokemons, getPokemons } from "../slices/pokemonSlice";
+import { getNextPokemons, getPokemons, getTypes } from "../slices/pokemonSlice";
 import { Button, Col, Row } from "react-bootstrap";
 import CardPokemon from "./CardPokemon";
 import { useEffect } from "react";
@@ -17,6 +17,7 @@ const PokemonList = () => {
 
   useEffect(() => {
     dispatch(getPokemons());
+    dispatch(getTypes());
   }, []);
 
   const handleNewPokemon = () => {
