@@ -1,3 +1,139 @@
-.hoverCard:hover {
-    transform: rotateY(20deg)
+/*! ESTILOS GENERALES */
+#root{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: url('../../public/pokemon-bg.jpg');
+}
+
+.mainPage{
+    flex-grow: 1;
+}
+
+.ubuntuFont{
+    font-family: "Ubuntu", sans-serif;
+}
+
+.PixelifyFont{
+    font-family: "Pixelify Sans", sans-serif;
+}
+
+.robotoFont{
+    font-family: "Roboto", sans-serif;
+}
+
+/*! Estilos en Card */
+
+.tipoPokemon{
+    margin-right: 10px;
+    border-radius: 10%;
+    padding: 5px;
+}
+
+.tipoPokemon:last-of-type{
+    margin-right: 0;
+}
+
+.grass{
+    background: #78C850;
+    color: rgb(33, 37, 41);
+
+}
+
+.bug{
+    background: #A8B820;
+    color: white;
+}
+
+.dark{
+    background: #707070;
+    color: white;
+}
+
+.dragon{
+    background: linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);;
+    color: white;
+}
+
+.electric{
+    background: #F8D030;
+    color: rgb(33, 37, 41);
+}
+
+.fairy{
+    background: #EE99AC;
+    color: rgb(33, 37, 41);
+}
+
+.fighting{
+    background: #C03028;
+    color: white;
+}
+
+.fire{
+    background: #F08030;
+    color: white;
+}
+
+.flying{
+    background: linear-gradient(180deg, #3dc7ef 50%, #bdb9b8 50%);
+    color: rgb(33, 37, 41);
+}
+
+.fire{
+    background: #F08030;
+    color: white;
+}
+
+.water{
+    background: #4592c4;
+    color: white;
+}
+
+.ghost{
+    background: #7B62A3;
+    color: white;
+}
+
+.ground{
+    background: linear-gradient(180deg, #f7de3f 50%, #ab9842 50%);;
+    color: rgb(33, 37, 41);
+}
+
+.ice{
+    background: #98D8D8;
+    color: rgb(33, 37, 41);
+}
+
+.normal{
+    background: #A8A878;
+    color: rgb(33, 37, 41);
+}
+
+.poison{
+    background: #A040A0;
+    color: white;
+}
+
+.psychic{
+    background: #F85888;
+    color: white;
+}
+
+.rock{
+    background: #B8A038;
+    color: white;
+}
+
+.steel{
+    background: #B8B8D0;
+    color: rgb(33, 37, 41);
+}
+
+.hoverCard{
+    transition: transform .3s;
+}
+
+.hoverCard:hover{
+    transform: scale(1.05);
 }

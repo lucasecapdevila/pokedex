@@ -24,7 +24,7 @@ i18next
           psychic: 'Psíquico',
           ice: 'Hielo',
           dragon: 'Dragon',
-          dark: 'Oscuro',
+          dark: 'Siniestro',
           fairy: 'Hada',
           stellar: 'Astral',
           unknown: 'Desconocido',

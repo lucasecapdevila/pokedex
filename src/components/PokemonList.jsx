@@ -56,8 +56,10 @@ const PokemonList = () => {
     <>
       {/* <Filter /> */}
       {/* <br /> */}
-      {content}
-      
+      <div className="d-flex flex-column">
+        {content}
+        <Button className="mx-auto my-2 fw-light robotoFont" onClick={handleNewPokemon}>Cargar más Pokemon</Button>
+      </div>
     </>
   );
 };

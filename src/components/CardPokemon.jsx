@@ -26,26 +26,31 @@ function CardPokemon({ pokemon }) {
 
   return (
     <Card className="h-100 hoverCard">
-      <Card.Header className="fw-bold text-center">
+      <Card.Header className="text-center fs-4 fw-light ubuntuFont">
         N°{pokemon.id}: {primerLetraMayuscula(pokemon.name)}
       </Card.Header>
       <Card.Body className="d-flex flex-column">
         <Card.Img
           variant="top"
-          className="h-100"
+          className="h-100 bg-dark-subtle"
           src={pokemon.sprites.other.dream_world.front_default}
         />
-        <Card.Text className="flex-grow-1">
+        <Card.Text className="mx-auto flex-grow-1">
           <br />
-          Tipo:{" "}
           {pokemon.types
-            .map((tipo) => t(tipo.type.name))
-            .join(" ")}
-            <br/>
+            .map((tipo) => (
+              <span key={tipo.type.name} className={`PixelifyFont fw-bold tipoPokemon ${tipo.type.name}`}>
+                {
+                  t(tipo.type.name)
+                }
+              </span>
+            ))
+          }
+          <br/>
         </Card.Text>
         <Container className="d-flex flex-column gap-1">
-          <Button className="btn btn-success mt-auto" onClick={() => {handleDescriptionPokemon(pokemon, primerLetraMayuscula(pokemon.name))}}>
-            Más info
+          <Button className="btn btn-success mt-auto fw-light robotoFont" onClick={() => {handleDescriptionPokemon(pokemon, primerLetraMayuscula(pokemon.name))}}>
+            Ver info
           </Button>
         </Container>
       </Card.Body>

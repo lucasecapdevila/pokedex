@@ -1,17 +1,17 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Image } from "react-bootstrap";
 import { LuSword } from "react-icons/lu";
 import { FaShieldAlt } from "react-icons/fa";
 import { SiSpeedtest } from "react-icons/si";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Col, Row } from "react-bootstrap";
 
 const PokemonPage = () => {
   //!  Nombre del pokemon que uso como parametro
   const { name } = useParams();
+  const { t } = useTranslation();
   const [descPoke, setDescPoke] = useState("");
 
   const getAdditionalInformation = async (url) => {
@@ -35,58 +35,41 @@ const PokemonPage = () => {
   }, []);
 
   return (
-    <div className="d-flex min-h-screen w-full bg-primary">
-      <aside className="flex flex-col items-center gap-6 border-r bg-background p-6">
-        <div className="rounded-full bg-primary p-4 text-6xl text-primary-foreground">
-          <Image
-            variant="top"
-            className="h-100 hoverCard"
-            src={infoPokemon?.sprites?.other?.dream_world?.front_default}
-          />
-        </div>
-        <Container>
+    <main className="mainPage">
+      <Container className="bg-light bg-opacity-75 py-4">
+        <div className="d-flex flex-column bg-light border rounded-2 my-5 p-2 fw-light robotoFont">
+        <h1 className="text-center my-2 ubuntuFont">{name}</h1>
+          <div className="d-flex justify-content-around">
+            <img className="w-25 rounded-2 bg-dark-subtle px-2" src={infoPokemon?.sprites?.other?.dream_world?.front_default} alt={name} />
+            <div className="w-25 ">
+              <p className="fs-5">{descPoke}</p>
+              <div className={`rounded-4 p-4 ${infoPokemon.types[0].type.name}`}>
+                <Row>
+                  <Col className="mb-3" xl={6}>Peso: {infoPokemon.weight / 10} kg</Col>
+                  <Col className="mb-3" xl={6}>Altura: {infoPokemon.height / 10} m</Col>
+                  <Col className="mb-3" xl={6}><LuSword/> Ataque: {infoPokemon?.stats[1]?.base_stat}</Col>
+                  <Col className="mb-3" xl={6}><FaShieldAlt/> Defensa: {infoPokemon?.stats[2]?.base_stat}</Col>
+                  <Col xl={6}><SiSpeedtest/> Velocidad: {infoPokemon?.stats[5]?.base_stat}</Col>
+                </Row>
+              </div>
+              <div className="d-flex flex-column mt-4">
+                <h3>Tipo:</h3>
+                <p className="w-100 align-self-center">
+                  {infoPokemon.types.map((tipo) => (
+                    <span key={tipo.type.name} className={`fw-bold fs-2 px-4 PixelifyFont tipoPokemon ${tipo.type.name}`}>
+                      {
+                        t(tipo.type.name)
+                      }
+                    </span>
+                  ))}
+                </p>
+              </div>
 
-          <div>
-            <h2 className="text-2xl font-bold">{name}</h2>
-            <div className="text-sm text-muted-foreground">
-              Peso: {infoPokemon.weight / 10} kg
-            </div>
-            <div className="text-sm text-muted-foreground">
-              Altura: {infoPokemon.height / 10} m
             </div>
           </div>
-          <Row  sm={1} md={3} className="mt-4 mt-md-2">
-            <Col className="d-flex flex-column align-items-center justify-content-center">
-                <LuSword/>
-                <div>Ataque</div>
-                {/* <div className="font-medium">{infoPokemon?.stats[1]?.base_stat}</div> */}
-            </Col>
-            <Col className="d-flex flex-column align-items-center justify-content-center">
-                <FaShieldAlt />
-                <div>Defensa</div>
-                {/* <div className="font-medium">{infoPokemon?.stats[2]?.base_stat}</div> */}
-            </Col>
-            <Col className="d-flex flex-column align-items-center justify-content-center">
-                <SiSpeedtest />
-                <div>Velocidad</div>
-                {/* <div className="font-medium">{infoPokemon?.stats[5]?.base_stat}</div> */}
-            </Col>
-          </Row>
-        </Container>
-      </aside>
-
-      <div className="flex-1 p-6">
-        <div className="prose max-w-2xl">
-          {/* {console.log(infoPokemon.species.url)} */}
-          <h1>{name}</h1>
-          <p>
-            {
-              descPoke ? descPoke : "No hay una descripción aún"
-            }
-          </p>
         </div>
-      </div>
-    </div>
+      </Container>
+    </main>
   );
 };
 
