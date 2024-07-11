@@ -46,7 +46,7 @@ const Menu = () => {
   }, [state.searchStatus])
 
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
+    <Navbar bg="dark" data-bs-theme="dark" className="robotoFont fw-light">
       <Container>
         <Navbar.Brand as={Link} to='/'>
           <img

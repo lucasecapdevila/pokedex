@@ -32,7 +32,7 @@ const PokemonList = () => {
     content = (
       <Row sm={1} md={3} lg={4} xl={5}>
         {datosPokemon.map((pokemon) => (
-          <Col key={pokemon.id} className="mb-2">
+          <Col key={pokemon.id} className="my-2">
             <CardPokemon pokemon={pokemon}></CardPokemon>
           </Col>
         ))}
@@ -46,9 +46,10 @@ const PokemonList = () => {
     <>
       {/* <Filter /> */}
       {/* <br /> */}
-      {content}
-      {console.log(datosPokemon)}
-      <Button onClick={handleNewPokemon}>Ver más</Button>
+      <div className="d-flex flex-column">
+        {content}
+        <Button className="mx-auto my-2 fw-light robotoFont" onClick={handleNewPokemon}>Cargar más Pokemon</Button>
+      </div>
     </>
   );
 };
