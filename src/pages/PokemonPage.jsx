@@ -6,6 +6,7 @@ import { SiSpeedtest } from "react-icons/si";
 import Container from "react-bootstrap/Container";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Col, Row } from "react-bootstrap";
 
 const PokemonPage = () => {
   //!  Nombre del pokemon que uso como parametro
@@ -39,15 +40,17 @@ const PokemonPage = () => {
         <div className="d-flex flex-column bg-light border rounded-2 my-5 p-2 fw-light robotoFont">
         <h1 className="text-center my-2 ubuntuFont">{name}</h1>
           <div className="d-flex justify-content-around">
-            <img className="w-25 rounded-2 bg-dark-subtle" src={infoPokemon?.sprites?.other?.dream_world?.front_default} alt={name} />
+            <img className="w-25 rounded-2 bg-dark-subtle px-2" src={infoPokemon?.sprites?.other?.dream_world?.front_default} alt={name} />
             <div className="w-25 ">
               <p className="fs-5">{descPoke}</p>
               <div className={`rounded-4 p-4 ${infoPokemon.types[0].type.name}`}>
-                <p>Peso: {infoPokemon.weight / 10} kg</p>
-                <p>Altura: {infoPokemon.height / 10} m</p>
-                <p><LuSword/> Ataque: {infoPokemon?.stats[1]?.base_stat}</p>
-                <p><FaShieldAlt/> Defensa: {infoPokemon?.stats[2]?.base_stat}</p>
-                <p><SiSpeedtest /> Velocidad: {infoPokemon?.stats[5]?.base_stat}</p>
+                <Row>
+                  <Col className="mb-3" xl={6}>Peso: {infoPokemon.weight / 10} kg</Col>
+                  <Col className="mb-3" xl={6}>Altura: {infoPokemon.height / 10} m</Col>
+                  <Col className="mb-3" xl={6}><LuSword/> Ataque: {infoPokemon?.stats[1]?.base_stat}</Col>
+                  <Col className="mb-3" xl={6}><FaShieldAlt/> Defensa: {infoPokemon?.stats[2]?.base_stat}</Col>
+                  <Col xl={6}><SiSpeedtest/> Velocidad: {infoPokemon?.stats[5]?.base_stat}</Col>
+                </Row>
               </div>
               <div className="d-flex flex-column mt-4">
                 <h3>Tipo:</h3>
@@ -64,8 +67,6 @@ const PokemonPage = () => {
 
             </div>
           </div>
-          <h2 className="text-center my-4">Evoluciones</h2>
-
         </div>
       </Container>
     </main>
