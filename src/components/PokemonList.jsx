@@ -3,7 +3,6 @@ import { getNextPokemons, getPokemons, getTypes } from "../slices/pokemonSlice";
 import { Button, Col, Row } from "react-bootstrap";
 import CardPokemon from "./CardPokemon";
 import { useEffect } from "react";
-import Filter from "./Filter";
 import Loader from "../common/Loader";
 
 const PokemonList = () => {
@@ -19,6 +18,14 @@ const PokemonList = () => {
     dispatch(getPokemons());
     dispatch(getTypes());
   }, []);
+
+  // useEffect(() => {
+  //   if (loading === "Cargando") 
+  //   {
+  //     console.log("Cargando")
+  //   }
+
+  // }, [datosPokemon]);
 
   const handleNewPokemon = () => {
     /* Esta es la funcionalidad que realiza el fetcheo a los siguientes pokemons*/
@@ -36,7 +43,7 @@ const PokemonList = () => {
       <>
       {loading ? <Loader/> : 
       <>
-        <Row sm={1} md={3} lg={4} xl={5}>
+        <Row sm={1} md={2} lg={3} xl={4}>
           {datosPokemon.map((pokemon) => (
             <Col key={pokemon.id} className="mb-2">
               <CardPokemon pokemon={pokemon}></CardPokemon>
@@ -54,11 +61,8 @@ const PokemonList = () => {
 
   return (
     <>
-      {/* <Filter /> */}
-      {/* <br /> */}
       <div className="d-flex flex-column">
         {content}
-        
       </div>
     </>
   );

@@ -35,18 +35,20 @@ function CardPokemon({ pokemon }) {
           className="h-100 bg-dark-subtle"
           src={pokemon.sprites.other.dream_world.front_default}
         />
-        <Card.Text className="mx-auto flex-grow-1">
-          <br />
-          {pokemon.types
-            .map((tipo) => (
-              <span key={tipo.type.name} className={`PixelifyFont fw-bold tipoPokemon ${tipo.type.name}`}>
-                {
-                  t(tipo.type.name)
-                }
-              </span>
-            ))
-          }
-          <br/>
+        <Card.Text className="d-flex flex-column flex-md-row gap-2 mt-2 mx-auto flex-grow-1">
+          {/* <br /> */}
+          {/* <div className="d-flex flex-column gap-2 mt-2"> */}
+            {pokemon.types
+              .map((tipo) => (
+                <span key={tipo.type.name} className={`PixelifyFont fw-bold tipoPokemon ${tipo.type.name}`}>
+                  {
+                    t(tipo.type.name)
+                  }
+                </span>
+              ))
+            }
+          {/* </div> */}
+          {/* <br/> */}
         </Card.Text>
         <Container className="d-flex flex-column gap-1">
           <Button className="btn btn-success mt-auto fw-light robotoFont" onClick={() => {handleDescriptionPokemon(pokemon, primerLetraMayuscula(pokemon.name))}}>

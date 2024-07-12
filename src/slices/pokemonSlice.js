@@ -76,16 +76,6 @@ export const getNextPokemons = createAsyncThunk(
   }
 );
 
-export const getTypes = createAsyncThunk(
-  "pokemons/getTypes",
-  async () => {
-    const response = await axios.get("https://pokeapi.co/api/v2/type?limit=21");
-    return response.data.results
-  }
-)
-
-
-
 export const getPokemon = createAsyncThunk(
   "pokemons/getPokemon",
   async (name = '') => {
@@ -110,16 +100,39 @@ export const searchPokemon = createAsyncThunk(
   } 
 )
 
+export const getTypes = createAsyncThunk(
+  "pokemons/getTypes",
+  async () => {
+    const response = await axios.get("https://pokeapi.co/api/v2/type?limit=21");
+    return response.data.results
+  }
+)
+
+export const getSpecificType = createAsyncThunk(
+  "pokemons/getSpecificType",
+  async (type) => {
+    const response = await axios.get(`https://pokeapi.co/api/v2/type/${type}/`);
+    const arrayTypePokemon = response.data.pokemon.map(async (pokemon) => {
+      const responsePokemon = await axios.get(pokemon.pokemon.url);
+      return responsePokemon.data;
+    });
+
+    return await Promise.all(arrayTypePokemon);
+  }
+)
+
 const pokemonSlice = createSlice({
   name: "pokemon",
   initialState,
   reducers: {
     setPokemon: (state, action) => {
-      console.log("Action: ", action.payload)
       state.specificPokemon = action.payload;
     },
     changeSearchStatus: (state, action) => {
       state.searchStatus = "";
+    },
+    filterSpecificType: (state, action) => {
+      state.status = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -179,10 +192,30 @@ const pokemonSlice = createSlice({
       })
       .addCase(getTypes.fulfilled, (state, action) => {
         state.types = action.payload;
+      })
+      .addCase(getTypes.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.status = "Rechazado";
+      })
+      .addCase(getTypes.pending, (state) => {
+        state.status = "Cargando";
+        state.error = null;
+      })
+      .addCase(getSpecificType.fulfilled, (state, action) => {
+        state.status = "Exitoso";
+        state.datosPokemon = action.payload.filter(pokemon => pokemon.sprites.front_default !== null);
+      })
+      .addCase(getSpecificType.rejected, (state, action) => {
+        state.status = "Rechazado";
+        state.error = action.error.message;
+      })
+      .addCase(getSpecificType.pending, (state) => {
+        state.status = "Cargando";
+        state.error = null;
       });
   },
 });
 
-export const { setPokemon, changeSearchStatus } = pokemonSlice.actions;
+export const { setPokemon, changeSearchStatus, filterSpecificType } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

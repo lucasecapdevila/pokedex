@@ -1,15 +1,23 @@
-import React, { useContext, useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { filterSpecificType, getSpecificType } from "../slices/pokemonSlice";
 
 function Filter() {
   const { t } = useTranslation();
   const filters = useSelector((state) => state.pokemon.types);
-  const [type, setType] = useState("");
+  const dispatch = useDispatch();
 
   const handleChangeType = (e) => {
-    console.log(e.target.value);
+    try {
+      dispatch(getSpecificType(e.target.value));
+      dispatch(filterSpecificType("Cargando"));
+    } catch(error) {
+      console.log(error)
+      dispatch(filterSpecificType("Error"));
+    }
+    
   };
 
   return (
@@ -18,15 +26,15 @@ function Filter() {
         aria-label="normal"
         defaultValue="normal"
         className="ms-auto align-self-end w-25 my-2"
-        onSelect={handleChangeType}
+        onChange={handleChangeType}
       >
-        {filters.map((type) => {
+        {filters.map((type, index) => {
           return (
             <>
-              {console.log(type)}
               <option
                 className={`PixelifyFont fw-bold tipoPokemon ${type.name}`}
                 value={type.name}
+                key={index}
               >
                 {t(type.name)}
               </option>
@@ -34,7 +42,6 @@ function Filter() {
           );
         })}
       </Form.Select>
-      <Button variant="primary" className="ms-2 p-2" onClick={handleChangeType}>Seleccionar</Button>
     </Form>
   );
 }
